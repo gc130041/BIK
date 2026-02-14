@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { getAccounts, getAccountById, createAccount, updateAccount } from './account.controller.js';
+import { getAccounts, getAccountById, createAccount, updateAccount, changeAccountStatus } from './account.controller.js';
 
 import {
         validateCreateAccount, 
         validateUpdateAccount,
-        validateGetAccountById
+        validateGetAccountById,
+        validateAccountStatusChange
     } from "../../middlewares/accounts-validators.js";
 
 const router = Router();
@@ -14,9 +15,11 @@ router.get('/', getAccounts);
 router.get('/:id', validateGetAccountById, getAccountById);
 
 //POST
-router.post('/', validateCreateAccount, createAccount);
+router.post('/:id', validateCreateAccount, createAccount);
 
 //PUT 
 router.put('/:id', validateUpdateAccount, updateAccount);
+router.put('/:id/activate', validateAccountStatusChange, changeAccountStatus);
+router.put('/:id/desactivate', validateAccountStatusChange, changeAccountStatus);
 
 export default router;

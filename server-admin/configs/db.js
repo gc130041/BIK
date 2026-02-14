@@ -21,7 +21,7 @@ export const dbConnection = async () => {
     });
  
     mongoose.connection.on("open", () => {
-      console.log("MongoDB | conectado a la base de datos agendaSexto");
+      console.log("MongoDB | conectado a la base de datos BIK");
     });
  
     mongoose.connection.on("reconnected", () => {

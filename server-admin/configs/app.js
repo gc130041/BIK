@@ -9,6 +9,8 @@ import { dbConnection } from '../configs/db.js';
 
 //Rutas
 import accountRoutes from '../src/accounts/account.routes.js';
+import serviceRoutes from '../src/Services/service.routes.js';
+// import authRoutes from '../src/auth/auth.routes.js'; 
 
 const BASE_URL = '/BIK/v1';
 
@@ -26,6 +28,8 @@ const middlewares = (app) => {
 //Integracion de todas las rutas
 const routes = (app) => {
     app.use(`${BASE_URL}/accounts`, accountRoutes);
+    app.use(`${BASE_URL}/services`, serviceRoutes);
+    // app.use(`${BASE_URL}/auth`, authRoutes);
 }
 
 //FUNCIÓN PARA INICIAR EL SERVIDOR
