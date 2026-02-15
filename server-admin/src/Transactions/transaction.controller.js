@@ -1,8 +1,8 @@
 'use strict';
 
 import Transaction from './transaction.model.js';
-import Service from '../Services/service.model.js';
-import Account from '../Accounts/account.model.js';
+import Service from '../services/service.model.js';
+import Account from '../accounts/account.model.js';
 import mongoose from 'mongoose';
 
 /**

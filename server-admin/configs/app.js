@@ -9,10 +9,11 @@ import { dbConnection } from '../configs/db.js';
 
 //Rutas
 import accountRoutes from '../src/accounts/account.routes.js';
-import serviceRoutes from '../src/Services/service.routes.js';
+import serviceRoutes from '../src/services/service.routes.js';
 import authRoutes from '../src/auth/auth.routes.js'; 
 import depositRoutes from '../src/deposit/deposit.routes.js';
 import transactionRoutes from '../src/transaction/transaction.routes.js';
+import userRoutes from '../src/users/user.routes.js';
 
 
 const BASE_URL = '/BIK/v1';
@@ -35,6 +36,7 @@ const routes = (app) => {
     app.use(`${BASE_URL}/auth`, authRoutes);
     app.use(`${BASE_URL}/deposit`, depositRoutes);
     app.use(`${BASE_URL}/transaction`, transactionRoutes);
+    app.use('/users', userRoutes);
 }
 
 //FUNCIÓN PARA INICIAR EL SERVIDOR

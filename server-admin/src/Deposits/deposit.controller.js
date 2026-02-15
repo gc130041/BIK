@@ -1,7 +1,7 @@
 'use strict';
 
 import Deposit from './deposit.model.js';
-import Account from '../Accounts/account.model.js';
+import Account from '../accounts/account.model.js';
 import mongoose from 'mongoose';
 
 /**
