@@ -10,7 +10,10 @@ import { dbConnection } from '../configs/db.js';
 //Rutas
 import accountRoutes from '../src/accounts/account.routes.js';
 import serviceRoutes from '../src/Services/service.routes.js';
-// import authRoutes from '../src/auth/auth.routes.js'; 
+import authRoutes from '../src/auth/auth.routes.js'; 
+import depositRoutes from '../src/deposit/deposit.routes.js';
+import transactionRoutes from '../src/transaction/transaction.routes.js';
+
 
 const BASE_URL = '/BIK/v1';
 
@@ -29,7 +32,9 @@ const middlewares = (app) => {
 const routes = (app) => {
     app.use(`${BASE_URL}/accounts`, accountRoutes);
     app.use(`${BASE_URL}/services`, serviceRoutes);
-    // app.use(`${BASE_URL}/auth`, authRoutes);
+    app.use(`${BASE_URL}/auth`, authRoutes);
+    app.use(`${BASE_URL}/deposit`, depositRoutes);
+    app.use(`${BASE_URL}/transaction`, transactionRoutes);
 }
 
 //FUNCIÓN PARA INICIAR EL SERVIDOR
@@ -64,3 +69,5 @@ const initServer = async (app) => {
 }
 
 export { initServer};
+
+import authRoutes from '../src/auth/auth.routes.js'; 
