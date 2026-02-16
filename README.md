@@ -49,57 +49,147 @@ Al iniciar la aplicación, se ejecuta un script automático que verifica la exis
 
 ## 4. API Endpoints (Rutas y Funciones)
 
-A continuación se listan las rutas disponibles, organizadas por módulo.
 
-### A. Autenticación (`/auth`)
+### 📋 Información General
 
-Controlador: `src/auth/auth.controller.js`
+* **Base URL:** `http://localhost:3001/BIK/v1`
+* **Headers Comunes:**
+* `Content-Type`: `application/json`
+* `Authorization`: `Bearer <TU_TOKEN_JWT>` (Solo para rutas privadas)
+---
 
-| Método | Ruta | Descripción | Acceso |
-| --- | --- | --- | --- |
-| **POST** | `/auth/login` | Inicia sesión y devuelve un token JWT. Requiere `username` y `password`. | Público |
-| **POST** | `/auth/register` | Registra un nuevo usuario cliente. Cifra la contraseña antes de guardar. | Público |
-| **GET** | `/auth/me` | Devuelve la información del usuario autenticado actual. | Privado (Token) |
+Para obtener y aplicar el token de autenticación en Postman y así poder realizar peticiones a las rutas protegidas, sigue estos pasos:
 
-### B. Gestión de Usuarios (`/users`)
+### 1. Obtención del Token (Login)
 
-Controlador: `src/Users/user.controller.js`
-*Nota: Este módulo permite la administración completa de perfiles.*
+Para generar un token válido, primero debes autenticarte con un usuario existente.
 
-| Método | Ruta | Descripción | Acceso |
-| --- | --- | --- | --- |
-| **GET** | `/users/` | Lista todos los usuarios activos del sistema con paginación. | Admin |
-| **GET** | `/users/:id` | Obtiene los detalles de un usuario específico por su ID. | Admin |
-| **PUT** | `/users/:id` | Actualiza la información de un usuario. Si se envía contraseña, la vuelve a cifrar. | Admin |
-| **DELETE** | `/users/:id` | Realiza un eliminado lógico (soft delete) cambiando el estado del usuario a inactivo. | Admin |
+* **Método:** `POST`
+* **URL:** `http://localhost:3001/BIK/v1/auth/login`
+* **Body (JSON):** Envía las credenciales del usuario.
+```json
+{
+    "email": "tu-correo@ejemplo.com",
+    "password": "tu-password"
+}
 
-### C. Transacciones y Operaciones (`/transactions`)
+```
 
-Controlador: `src/Transactions/transaction.controller.js`
-*Nota: Implementa atomicidad en base de datos para garantizar la integridad financiera.*
 
-| Método | Ruta | Descripción | Acceso |
-| --- | --- | --- | --- |
-| **POST** | `/transactions/transfer` | Realiza una transferencia monetaria entre cuentas. Valida fondos, límites (Max Q2000/envío, Max Q100/día acumulado) y actualiza saldos atómicamente. | Privado |
-| **POST** | `/transactions/pay-service` | Procesa el pago de un servicio. Descuenta el saldo y genera el registro del servicio y la transacción. | Privado |
-| **GET** | `/transactions/history/:accountId` | Obtiene el historial de transacciones (entrantes y salientes) de una cuenta específica. | Privado |
-| **GET** | `/transactions/:id` | Obtiene el detalle de una transacción específica por su ID. | Privado |
-
-### D. Otros Módulos (Estructura Base)
-
-El proyecto cuenta con la estructura para los siguientes módulos, los cuales se integran con las operaciones principales:
-
-* **Cuentas (`/accounts`):** Modelos definidos para manejar número de cuenta, saldo (`earningsM`) y propietario.
-* **Servicios (`/services`):** Estructura para registrar los tipos de servicios pagados.
-* **Depósitos (`/deposits`):** Controladores base para la gestión de ingresos de capital.
+* **Respuesta:** El servidor te devolverá un objeto JSON que contiene una propiedad llamada `token`. **Copia ese valor** (sin las comillas).
 
 ---
 
-## 5. Modelos de Datos (Schemas Principales)
+### 2. Aplicación del Token en Peticiones Protegidas
 
-Breve descripción de los campos clave en la base de datos:
+Una vez que tengas el token, debes incluirlo en cada petición que lo requiera (marcadas con "✅ Token" en la documentación).
 
-* **User:** `username`, `password` (hash), `role` (ADMIN_ROLE/USER_ROLE), `status`.
-* **Account:** `numberAccount` (único), `nameAccount`, `earningsM` (saldo), `user` (referencia), `isActive`.
-* **Transaction:** `sourceAccount`, `destinationAccount`, `amount`, `transactionType` (TRANSFERENCIA/PAGO_SERVICIO), `date`, `status`.
-* **Service:** `nameService`, `typeService`, `amount`, `status`.
+#### Opción A: Pestaña "Authorization" (Recomendado)
+
+1. En Postman, selecciona la pestaña **Auth** o **Authorization**.
+2. En el menú desplegable **Type**, selecciona **Bearer Token**.
+3. En el campo de la derecha llamado **Token**, pega el código que copiaste anteriormente.
+
+#### Opción B: Pestaña "Headers" (Manual)
+
+Si prefieres hacerlo manualmente, ve a la pestaña **Headers** y agrega la siguiente entrada:
+
+* **Key:** `Authorization`
+* **Value:** `TU_TOKEN_AQUÍ`
+
+---
+
+### 3. Verificación
+
+Si el token se aplicó correctamente, al intentar acceder a una ruta protegida como `/auth/me`, el servidor te devolverá la información del usuario en lugar de un error `401 Unauthorized` o `500`.
+
+---
+
+### 🔐 1. Autenticación (Auth)
+
+*Gestión de acceso y perfiles.*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+| --- | --- | --- | --- | --- | --- |
+| **POST** | `/auth/register` | ❌ No | N/A | Registrar un nuevo cliente. | `{"name": "Ana", "surname": "Lopez", "username": "analo", "email": "ana@mail.com", "password": "123456", "phone": "55554444"}` |
+| **POST** | `/auth/login` | ❌ No | N/A | Iniciar sesión y obtener Token. | `{"email": "ana@mail.com", "password": "123456"}` |
+| **GET** | `/auth/me` | ✅ Token | N/A | Obtener datos del perfil logueado. | *N/A* |
+
+---
+
+### 👤 2. Usuarios (Users)
+
+*Gestión de usuarios del sistema (Requiere Rol ADMIN).*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+| --- | --- | --- | --- | --- | --- |
+| **GET** | `/users` | ✅ Admin | N/A | Listar todos los usuarios. | *N/A* |
+| **GET** | `/users/:id` | ✅ Admin | **ID del Usuario** | Ver detalle de un usuario. | *N/A* |
+| **PUT** | `/users/:id` | ✅ Admin | **ID del Usuario** | Actualizar datos de usuario. | `{"name": "Ana María", "phone": "11223344"}` |
+| **DELETE** | `/users/:id` | ✅ Admin | **ID del Usuario** | Eliminar (desactivar) usuario. | *N/A* |
+
+---
+
+### 💳 3. Cuentas (Accounts)
+
+*Gestión de cuentas bancarias.*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+| --- | --- | --- | --- | --- | --- |
+| **GET** | `/accounts` | ✅ Token | N/A | Listar todas las cuentas. | *N/A* |
+| **GET** | `/accounts/:id` | ✅ Token | **ID de Cuenta** | Ver detalle de una cuenta. | *N/A* |
+| **POST** | `/accounts/:id` | ✅ Token | **ID del Usuario** (Dueño) | Crear cuenta a un usuario específico. | `{"dpi": "1234567890101", "typeAcount": "Ahorro", "nameAccount": "Ahorro Navidad", "email": "ana@mail.com", "phoneNumber": "55554444"}` |
+| **PUT** | `/accounts/:id` | ✅ Token | **ID de Cuenta** | Actualizar info de la cuenta. | `{"nameAccount": "Cuenta Principal"}` |
+| **PUT** | `/accounts/:id/activate` | ✅ Token | **ID de Cuenta** | Activar una cuenta. | *N/A* |
+| **PUT** | `/accounts/:id/desactivate` | ✅ Token | **ID de Cuenta** | Desactivar una cuenta. | *N/A* |
+
+---
+
+### 🛠️ 4. Servicios (Services)
+
+*Catálogo de servicios pagables (Luz, Agua, etc.).*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+| --- | --- | --- | --- | --- | --- |
+| **GET** | `/services` | ✅ Token | N/A | Listar servicios disponibles. | *N/A* |
+| **POST** | `/services` | ✅ Token | N/A | Crear nuevo servicio en el sistema. | `{"nameService": "Pago de servicios", "typeService": "Internet", "numberAccountPay": "INT-9988", "methodPayment": "Bancaria", "amounth": 250}` |
+| **GET** | `/services/:id` | ✅ Token | **ID de Servicio** | Ver un servicio específico. | *N/A* |
+| **PUT** | `/services/:id` | ✅ Token | **ID de Servicio** | Editar servicio. | `{"amounth": 300}` |
+| **PUT** | `/services/:id/:status` | ✅ Token | **ID de Servicio** y **Estado** | Cambiar estado (PENDING, COMPLETED, CANCELED). | *N/A* (El estado va en la URL, ej: `/services/ID/CANCELED`) |
+
+---
+
+### 💰 5. Depósitos (Deposits)
+
+*Ingreso de dinero a cuentas.*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+|--------|------------------|-------|------------------|------------|----------------------|
+| **POST** | `/deposits` | ✅ Token | N/A | **ADMIN:** Suma dinero (Ventanilla).<br>**CLIENT:** Transfiere de su cuenta a destino. | `{"accountId":"ID_CUENTA_DESTINO","amount":500,"description":"Abono"}` |
+| **GET** | `/deposits/history/:accountId` | ✅ Token | ID de Cuenta | Ver historial de depósitos recibidos. | N/A |
+| **GET** | `/deposits/:id` | ✅ Token | ID de Depósito | Ver detalle de un depósito. | N/A |
+
+---
+
+### 💸 6. Transacciones (Transactions)
+
+*Movimientos de dinero (Transferencias y Pagos).*
+
+| Método | Endpoint Completo | Auth? | ¿Qué es el `:id`? | Descripción | Body (JSON) Sugerido |
+| --- | --- | --- | --- | --- | --- |
+| **POST** | `/transactions/transfer` | ✅ Token | N/A | Transferencia entre cuentas. | `{"sourceAccount": "ID_CUENTA_ORIGEN", "destinationAccount": "ID_CUENTA_DESTINO", "amount": 100, "description": "Regalo"}` |
+| **POST** | `/transactions/pay-service` | ✅ Token | N/A | Pagar un servicio del catálogo. | `{"sourceAccount": "ID_CUENTA_ORIGEN", "serviceId": "ID_DEL_SERVICIO", "amount": 250}` |
+| **GET** | `/transactions/history/:accountId` | ✅ Token | **ID de Cuenta** | Historial de transacciones de una cuenta. | *N/A* |
+| **GET** | `/transactions/:id` | ✅ Token | **ID de Transacción** | Ver detalle de una transacción. | *N/A* |
+
+---
+
+### 💡 Notas Importantes para el Frontend/QA
+
+1. **IDs:** Cuando dice "ID", se refiere siempre al **`_id` de MongoDB** (cadena de 24 caracteres, ej: `65d1f2a...`), NO al número de cuenta o DPI.
+2. **Roles:**
+* Si usas el endpoint `/deposits` con un token de **ADMIN**, el dinero se crea.
+* Si lo usas con token de **CLIENTE**, el dinero se descuenta de la cuenta del usuario logueado.
+
+
+3. **Fechas:** Todas las fechas se generan automáticamente en el servidor.
