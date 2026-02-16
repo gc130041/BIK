@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getAccounts, getAccountById, createAccount, updateAccount, changeAccountStatus } from './account.controller.js';
+import { validateJWT } from '../../middlewares/validate-jwt.js';
 
 import {
         validateCreateAccount, 
@@ -11,15 +12,15 @@ import {
 const router = Router();
 
 //GET
-router.get('/', getAccounts);
-router.get('/:id', validateGetAccountById, getAccountById);
+router.get('/', validateJWT, getAccounts);
+router.get('/:id', validateGetAccountById, validateJWT, getAccountById);
 
 //POST
-router.post('/:id', validateCreateAccount, createAccount);
+router.post('/:id', validateCreateAccount, validateJWT, createAccount);  
 
 //PUT 
-router.put('/:id', validateUpdateAccount, updateAccount);
-router.put('/:id/activate', validateAccountStatusChange, changeAccountStatus);
-router.put('/:id/desactivate', validateAccountStatusChange, changeAccountStatus);
+router.put('/:id', validateUpdateAccount, validateJWT, updateAccount);
+router.put('/:id/activate', validateAccountStatusChange, validateJWT, changeAccountStatus);
+router.put('/:id/desactivate', validateAccountStatusChange, validateJWT, changeAccountStatus);
 
 export default router;
