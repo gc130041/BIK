@@ -4,103 +4,134 @@ import Deposit from './deposit.model.js';
 import Account from '../accounts/account.model.js';
 import mongoose from 'mongoose';
 
-/**
- * CREAR DEPÓSITO
- */
 export const createDeposit = async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
     try {
         const { accountId, amount, description } = req.body;
 
-        if (amount <= 0) throw new Error('El monto debe ser mayor a 0');
+        const { role, email, uid } = req.user;
 
-        // 1. Verificar cuenta
-        const account = await Account.findById(accountId).session(session);
-        if (!account) throw new Error('Cuenta no encontrada');
-        if (!account.isActive) throw new Error('Cuenta inactiva, no se puede depositar');
+        if (amount <= 0) {
+            return res.status(400).json({
+                success: false,
+                message: 'El monto debe ser mayor a 0'
+            });
+        }
 
-        // 2. Crear registro de depósito
+        // 1. Buscar la cuenta de DESTINO
+        const destinationAccount = await Account.findById(accountId);
+        if (!destinationAccount) {
+            return res.status(404).json({
+                success: false,
+                message: 'Cuenta de destino no encontrada'
+            });
+        }
+        if (!destinationAccount.isActive) {
+            return res.status(400).json({
+                success: false,
+                message: 'La cuenta de destino no está activa'
+            });
+        }
+
+        let finalDescription = description;
+
+        if (role === 'ADMIN_ROLE') {
+            // Caso ADMIN
+            destinationAccount.earningsM += parseFloat(amount);
+            finalDescription = description || `Depósito en Ventanilla (Admin: ${email})`;
+
+            await destinationAccount.save();
+        }
+        else {
+            // Caso CLIENTE
+            const sourceAccount = await Account.findOne({ email: email });
+
+            if (!sourceAccount) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'No tienes una cuenta bancaria asociada para realizar la transferencia.'
+                });
+            }
+
+            if (sourceAccount._id.equals(destinationAccount._id)) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'No puedes transferirte a tu propia cuenta.'
+                });
+            }
+
+            if (sourceAccount.earningsM < amount) {
+                return res.status(400).json({
+                    success: false,
+                    message: `Fondos insuficientes. Saldo actual: Q${sourceAccount.earningsM}`
+                });
+            }
+
+            sourceAccount.earningsM -= parseFloat(amount);
+            destinationAccount.earningsM += parseFloat(amount);
+
+            finalDescription = description || `Transferencia de cuenta ${sourceAccount.numberAccount}`;
+
+            await sourceAccount.save();
+            await destinationAccount.save();
+        }
+
         const deposit = new Deposit({
             accountId,
             amount,
-            description: description || 'Depósito bancario',
-            status: 'COMPLETED'
+            description: finalDescription,
+            status: 'COMPLETED',
+            madeBy: uid,
+            date: new Date()
         });
-        await deposit.save({ session });
 
-        // 3. Actualizar saldo (earningsM)
-        account.earningsM += parseFloat(amount);
-        await account.save({ session });
-
-        await session.commitTransaction();
-        session.endSession();
+        await deposit.save();
 
         res.status(200).json({
             success: true,
-            message: 'Depósito realizado con éxito',
+            message: 'Transacción realizada con éxito',
             deposit,
-            currentBalance: account.earningsM
+            newBalance: destinationAccount.earningsM
         });
 
     } catch (error) {
-        await session.abortTransaction();
-        session.endSession();
+        console.error('Error en depósito:', error);
         res.status(500).json({
             success: false,
-            message: 'Error al realizar depósito',
+            message: 'Error al realizar la transacción',
             error: error.message
         });
     }
 };
 
-/**
- * OBTENER DEPÓSITOS POR CUENTA
- * (Antes se llamaba getDeposits, ahora coincide con la ruta)
- */
 export const getDepositsByAccount = async (req, res) => {
     try {
         const { accountId } = req.params;
-        const { limit = 10, page = 1 } = req.query;
-
-        const skip = (page - 1) * limit;
+        const { limit = 5 } = req.query;
 
         const deposits = await Deposit.find({ accountId })
-            .populate('accountId', 'numberAccount nameAccount') // Ajustado a tu modelo Account
+            .populate('accountId', 'numberAccount nameAccount')
             .sort({ date: -1 })
-            .skip(parseInt(skip))
             .limit(parseInt(limit));
-
-        const total = await Deposit.countDocuments({ accountId });
 
         res.status(200).json({
             success: true,
-            total,
-            deposits,
-             pagination: {
-                page: parseInt(page),
-                limit: parseInt(limit),
-                totalRecords: total
-            }
+            count: deposits.length,
+            deposits
         });
 
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: 'Error al obtener depósitos',
+            message: 'Error al obtener historial',
             error: error.message
         });
     }
 };
 
-/**
- * OBTENER DEPÓSITO POR ID
- * (Esta función faltaba en el bloque anterior)
- */
 export const getDepositById = async (req, res) => {
     try {
         const { id } = req.params;
+
         const deposit = await Deposit.findById(id)
             .populate('accountId', 'numberAccount nameAccount');
 
@@ -115,6 +146,7 @@ export const getDepositById = async (req, res) => {
             success: true,
             deposit
         });
+
     } catch (error) {
         res.status(500).json({
             success: false,

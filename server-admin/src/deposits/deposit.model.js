@@ -32,6 +32,10 @@ const depositSchema = new mongoose.Schema({
         type: String,
         enum: ['COMPLETED', 'PENDING', 'REVERSED'],
         default: 'COMPLETED'
+    },
+    madeBy: {
+        type: mongoose.Schema.Types.ObjectId, // <-- CORREGIDO AQUÍ (agregado mongoose.)
+        ref: 'User'
     }
 }, {
     versionKey: false,
