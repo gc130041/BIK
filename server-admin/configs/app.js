@@ -71,5 +71,3 @@ const initServer = async (app) => {
 }
 
 export { initServer};
-
-import authRoutes from '../src/auth/auth.routes.js'; 
