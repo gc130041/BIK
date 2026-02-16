@@ -5,14 +5,14 @@ import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import { corsOptions } from './cors-configuration.js';
-import { dbConnection } from '../configs/db.js';
+import { dbConnection } from './db.js';
 
 //Rutas
 import accountRoutes from '../src/accounts/account.routes.js';
 import serviceRoutes from '../src/services/service.routes.js';
 import authRoutes from '../src/auth/auth.routes.js'; 
-import depositRoutes from '../src/deposit/deposit.routes.js';
-import transactionRoutes from '../src/transaction/transaction.routes.js';
+import depositRoutes from '../src/Deposits/deposit.routes.js';
+import transactionRoutes from '../src/Transactions/transaction.routes.js';
 import userRoutes from '../src/users/user.routes.js';
 
 
@@ -71,5 +71,3 @@ const initServer = async (app) => {
 }
 
 export { initServer};
-
-import authRoutes from '../src/auth/auth.routes.js'; 

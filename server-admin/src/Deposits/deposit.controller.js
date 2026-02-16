@@ -6,7 +6,6 @@ import mongoose from 'mongoose';
 
 /**
  * CREAR DEPÓSITO
- * Suma al 'earningsM' de la cuenta destino.
  */
 export const createDeposit = async (req, res) => {
     const session = await mongoose.startSession();
@@ -58,26 +57,68 @@ export const createDeposit = async (req, res) => {
 
 /**
  * OBTENER DEPÓSITOS POR CUENTA
+ * (Antes se llamaba getDeposits, ahora coincide con la ruta)
  */
-export const getDeposits = async (req, res) => {
+export const getDepositsByAccount = async (req, res) => {
     try {
         const { accountId } = req.params;
-        const { limit = 5 } = req.query;
+        const { limit = 10, page = 1 } = req.query;
+
+        const skip = (page - 1) * limit;
 
         const deposits = await Deposit.find({ accountId })
-            .populate('accountId', 'numberAccount nameAccount')
+            .populate('accountId', 'numberAccount nameAccount') // Ajustado a tu modelo Account
             .sort({ date: -1 })
+            .skip(parseInt(skip))
             .limit(parseInt(limit));
+
+        const total = await Deposit.countDocuments({ accountId });
 
         res.status(200).json({
             success: true,
-            deposits
+            total,
+            deposits,
+             pagination: {
+                page: parseInt(page),
+                limit: parseInt(limit),
+                totalRecords: total
+            }
         });
 
     } catch (error) {
         res.status(500).json({
             success: false,
             message: 'Error al obtener depósitos',
+            error: error.message
+        });
+    }
+};
+
+/**
+ * OBTENER DEPÓSITO POR ID
+ * (Esta función faltaba en el bloque anterior)
+ */
+export const getDepositById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deposit = await Deposit.findById(id)
+            .populate('accountId', 'numberAccount nameAccount');
+
+        if (!deposit) {
+            return res.status(404).json({
+                success: false,
+                message: 'Depósito no encontrado'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            deposit
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Error al obtener el depósito',
             error: error.message
         });
     }
