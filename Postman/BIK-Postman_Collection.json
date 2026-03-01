@@ -1,654 +1,1034 @@
 {
-  "info": {
-    "_postman_id": "b05eafaa-f8aa-469a-bd61-ca8cda17897b",
-    "name": "BIK",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "52435973",
-    "_collection_link": "https://go.postman.co/collection/52435973-b05eafaa-f8aa-469a-bd61-ca8cda17897b?source=collection_link"
-  },
-  "item": [
-    {
-      "name": "Register",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"name\": \"Juan\",\r\n    \"surname\": \"Perez\",\r\n    \"username\": \"juanp\",\r\n    \"email\": \"juan@test.com\",\r\n    \"password\": \"123456\",\r\n    \"phone\": \"12345678\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/auth/register",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "auth",
-            "register"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"username\": \"juanp\",\r\n    \"password\": \"123456\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/auth/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Login Admin",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"username\": \"ADMINB\",\r\n    \"password\": \"ADMINB\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/auth/login",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "auth",
-            "login"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Ver Perfil Propio",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"username\": \"juanp\",\r\n    \"password\": \"123456\"\r\n}"
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/auth/me",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "auth",
-            "me"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Listar Usuarios",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/users",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "users"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Editar Usuario",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"name\": \"Juan Pérez Actualizado\",\r\n  \"phone\": \"11112222\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/users/6993319f65e79c9f21ec2272",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "users",
-            "6993319f65e79c9f21ec2272"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Crear Cuenta Bancaria",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n  \"dpi\": \"1234567890123\",\r\n  \"typeAcount\": \"Monetaria\",\r\n  \"earningsM\": 1500.50,\r\n  \"nameAccount\": \"Cuenta de Ahorros Personal\",\r\n  \"email\": \"usuario@ejemplo.com\",\r\n  \"phoneNumber\": \"50244556677\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/accounts/:id",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "accounts",
-            ":id"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Listar Cuentas",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/accounts/",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "accounts",
-            ""
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Activar Cuenta",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/accounts/:id/activate",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "accounts",
-            ":id",
-            "activate"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Desactivar Cuenta",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/accounts/:id/desactivate",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "accounts",
-            ":id",
-            "desactivate"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Depósitos ADMIN",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"accountNumber\": \"NUMERO_CUENTA\", \r\n    \"amount\": 5000.00\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/deposits",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "deposits"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Transferencia",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"sourceAccount\": \"ID_CUENTA_ORIGEN\",\r\n    \"destinationAccount\": \"ID_CUENTA_DESTINO\",\r\n    \"amount\": 150.00,\r\n    \"description\": \"Pago de deuda\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/transaction/transfer",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "transaction",
-            "transfer"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Pago de Servicios",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"sourceAccount\": \"ID_CUENTA_ORIGEN\",\r\n    \"serviceId\": \"ID_DEL_SERVICIO\",\r\n    \"amount\": 75.50,\r\n    \"description\": \"Mensualidad Internet\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/transaction/pay-service",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "transaction",
-            "pay-service"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Consulta de Historial por cuenta",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/transaction/history/:accountId",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "transaction",
-            "history",
-            ":accountId"
-          ],
-          "variable": [
-            {
-              "key": "accountId",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Obtener detalles de una transaccion",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/transaction/:id",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "transaction",
-            ":id"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Crear un nuevo servicio",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"nameService\": \"Pago de servicios\",\r\n    \"typeService\": \"Internet\",\r\n    \"numberAccountPay\": \"8877665544\",\r\n    \"methodPayment\": \"Bancaria\",\r\n    \"amounth\": 350.00,\r\n    \"status\": \"COMPLETED\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/services",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "services"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Listar todos los servicios",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/services",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "services"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Obtener servicio por ID",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/services/:id",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "services",
-            ":id"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Actualizar datos de un servicio",
-      "request": {
-        "method": "PUT",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"typeService\": \"Luz\",\r\n    \"amounth\": 400.00\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/services/:id",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "services",
-            ":id"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Cambiar Estado de un Servicio",
-      "request": {
-        "method": "PUT",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"typeService\": \"Luz\",\r\n    \"amounth\": 400.00\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3001/BIK/v1/services/:id/:status",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "3001",
-          "path": [
-            "BIK",
-            "v1",
-            "services",
-            ":id",
-            ":status"
-          ],
-          "variable": [
-            {
-              "key": "id",
-              "value": ""
-            },
-            {
-              "key": "status",
-              "value": ""
-            }
-          ]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "20463375-3b4d-41bc-bc24-b1d659b90b74",
+		"name": "BIK - API Multiservicio (Admin + CoreBanking + Auditoría)",
+		"description": "Colección multiservicio para BIK.\n\nIncluye:\n- Admin Server (Express) en {{admin_base_url}} (JWT Bearer)\n- Core Banking (.NET) en {{core_banking_base_url}}\n- Audit Service (.NET) en {{audit_base_url}}\n\nMódulo Favoritos omitido (vacío).\n\nConvención: cada solicitud tiene un nombre corto en español que describe lo que hace.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48421810",
+		"_collection_link": "https://olivmer765-3228389.postman.co/workspace/Oliver-Team's-Workspace~e5396a9a-97bc-40d3-8c29-b0e8abc59a9f/collection/48421810-20463375-3b4d-41bc-bc24-b1d659b90b74?action=share&source=collection_link&creator=48421810"
+	},
+	"item": [
+		{
+			"name": "Servidor Admin (Express)",
+			"item": [
+				{
+					"name": "Health",
+					"item": [
+						{
+							"name": "Health check",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/health",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"health"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Autenticación",
+					"item": [
+						{
+							"name": "Iniciar sesión",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"pm.test('Estado 200', function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"let jsonData = {};",
+											"try { jsonData = pm.response.json(); } catch (e) {}",
+											"const token = jsonData?.userDetails?.token;",
+											"pm.test('Token guardado', function () {",
+											"  pm.expect(token).to.be.a('string').and.not.empty;",
+											"});",
+											"if (token) pm.collectionVariables.set('token', token);"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"{{admin_username}}\",\n  \"password\": \"{{admin_password}}\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/auth/login",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Registrar usuario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"user_{{$timestamp}}\",\n  \"password\": \"Test1234!\",\n  \"role\": \"USER_ROLE\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/auth/register",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener perfil",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/auth/me",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"auth",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Usuarios (ADMIN_ROLE)",
+					"item": [
+						{
+							"name": "Listar usuarios",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/users?limit=10&from=0",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "from",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener usuario",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar usuario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"usuario_actualizado_{{$timestamp}}\",\n  \"password\": \"NuevaPass1234!\",\n  \"role\": \"USER_ROLE\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Desactivar usuario",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/users/{{user_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"users",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cuentas",
+					"item": [
+						{
+							"name": "Listar cuentas",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/accounts",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener cuenta",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/accounts/{{account_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts",
+										"{{account_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear cuenta",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"dpi\": \"1234567890123\",\n  \"typeAcount\": \"Ahorro\",\n  \"earningsM\": 1500.5,\n  \"nameAccount\": \"Cuenta QA {{$timestamp}}\",\n  \"email\": \"qa{{$timestamp}}@mail.com\",\n  \"phoneNumber\": \"+50255554444\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/accounts/{{user_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"email\": \"correoejemplo123@gmail.com\",\n  \"phoneNumber\": \"55587903\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/accounts/{{account_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts",
+										"{{account_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Activar cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/accounts/{{account_id}}/activate",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts",
+										"{{account_id}}",
+										"activate"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Desactivar cuenta",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/accounts/{{account_id}}/desactivate",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"accounts",
+										"{{account_id}}",
+										"desactivate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Depósitos",
+					"item": [
+						{
+							"name": "Crear depósito",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"accountId\": \"{{account_id}}\",\n  \"amount\": 500,\n  \"description\": \"Abono QA\",\n  \"originSource\": \"Ventanilla\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/deposits",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"deposits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar depósitos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/deposits/history/{{account_id}}?limit=5",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"deposits",
+										"history",
+										"{{account_id}}"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener depósito",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/deposits/{{deposit_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"deposits",
+										"{{deposit_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transacciones",
+					"item": [
+						{
+							"name": "Hacer transferencia",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sourceAccountId\": \"{{account_id}}\",\n  \"destinationAccountId\": \"{{account_id}}\",\n  \"amount\": 10,\n  \"description\": \"Transfer QA\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/transactions/transfer",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"transactions",
+										"transfer"
+									]
+								},
+								"description": "IMPORTANTE: destinationAccountId debe ser distinto a sourceAccountId."
+							},
+							"response": []
+						},
+						{
+							"name": "Pagar servicio",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sourceAccountId\": \"{{account_id}}\",\n  \"amount\": 25,\n  \"typeService\": \"Internet\",\n  \"nameService\": \"Pago de servicios\",\n  \"numberAccountPay\": \"INT-9988\",\n  \"methodPayment\": \"Bancaria\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/transactions/pay-service",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"transactions",
+										"pay-service"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Listar transacciones",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/transactions/history/{{account_id}}?limit=10&page=1",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"transactions",
+										"history",
+										"{{account_id}}"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener transacción",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{token}}"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/transactions/{{transaction_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"transactions",
+										"{{transaction_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Servicios",
+					"item": [
+						{
+							"name": "Listar servicios",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/services?status=&datePayment=",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"services"
+									],
+									"query": [
+										{
+											"key": "status",
+											"value": ""
+										},
+										{
+											"key": "datePayment",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Crear servicio",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"nameService\": \"Pago de servicios\",\n  \"typeService\": \"Internet\",\n  \"numberAccountPay\": \"INT-9988\",\n  \"methodPayment\": \"Bancaria\",\n  \"amounth\": 250,\n  \"status\": \"COMPLETED\"\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/services",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"services"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Obtener servicio",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/services/{{service_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"services",
+										"{{service_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Actualizar servicio",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"amounth\": 300\n}"
+								},
+								"url": {
+									"raw": "{{admin_base_url}}/services/{{service_id}}",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"services",
+										"{{service_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cambiar estado servicio",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{admin_base_url}}/services/{{service_id}}/CANCELED",
+									"host": [
+										"{{admin_base_url}}"
+									],
+									"path": [
+										"services",
+										"{{service_id}}",
+										"CANCELED"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Core Banking (.NET)",
+			"item": [
+				{
+					"name": "Depositar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": {{core_account_id_origen}},\n  \"amount\": 10.00\n}"
+						},
+						"url": {
+							"raw": "{{core_banking_base_url}}/api/Transactions/deposit",
+							"host": [
+								"{{core_banking_base_url}}"
+							],
+							"path": [
+								"api",
+								"Transactions",
+								"deposit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retirar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"accountId\": {{core_account_id_origen}},\n  \"amount\": 5.00\n}"
+						},
+						"url": {
+							"raw": "{{core_banking_base_url}}/api/Transactions/withdraw",
+							"host": [
+								"{{core_banking_base_url}}"
+							],
+							"path": [
+								"api",
+								"Transactions",
+								"withdraw"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Transferir",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fromAccountId\": {{core_account_id_origen}},\n  \"toAccountId\": {{core_account_id_destino}},\n  \"amount\": 2.50\n}"
+						},
+						"url": {
+							"raw": "{{core_banking_base_url}}/api/Transactions/transfer",
+							"host": [
+								"{{core_banking_base_url}}"
+							],
+							"path": [
+								"api",
+								"Transactions",
+								"transfer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Servicio Auditoría (.NET)",
+			"item": [
+				{
+					"name": "Crear registro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"actionType\": \"Transaction\",\n  \"description\": \"Log manual QA\",\n  \"accountId\": {{core_account_id_origen}},\n  \"userId\": null,\n  \"severity\": \"Info\",\n  \"sourceIpAddress\": \"{{ip_origen}}\"\n}"
+						},
+						"url": {
+							"raw": "{{audit_base_url}}/api/Audit",
+							"host": [
+								"{{audit_base_url}}"
+							],
+							"path": [
+								"api",
+								"Audit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar registros",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{audit_base_url}}/api/Audit",
+							"host": [
+								"{{audit_base_url}}"
+							],
+							"path": [
+								"api",
+								"Audit"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "admin_base_url",
+			"value": "http://localhost:3001/BIK/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "admin_username",
+			"value": "ADMINB",
+			"type": "string"
+		},
+		{
+			"key": "admin_password",
+			"value": "ADMINB",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "account_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "deposit_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "transaction_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "service_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "core_banking_base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		},
+		{
+			"key": "core_account_id_origen",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "core_account_id_destino",
+			"value": "2",
+			"type": "string"
+		},
+		{
+			"key": "audit_base_url",
+			"value": "http://localhost:5001",
+			"type": "string"
+		},
+		{
+			"key": "ip_origen",
+			"value": "127.0.0.1",
+			"type": "string"
+		}
+	]
 }
